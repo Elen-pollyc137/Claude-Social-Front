@@ -2,8 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/src/services/api";
-import { LoginResponse } from "@/src/types/auth.type";
+import { login } from "@/src/services/auth";
 import styles from "./login.module.scss";
 
 export default function LoginPage() {
@@ -19,13 +18,8 @@ export default function LoginPage() {
     setCarregando(true);
 
     try {
-      const response = await api.post<LoginResponse>("/auth/login", {
-        email,
-        senha,
-      });
-
-      localStorage.setItem("access_token", response.data.access_token);
-      router.push("/familias");
+      await login({ email, senha });
+      router.push("/dashboard");
     } catch {
       setErro("E-mail ou senha inválidos.");
     } finally {
@@ -36,7 +30,7 @@ export default function LoginPage() {
   return (
     <main className={styles.container}>
       <div className={styles.card}>
-        <h1>Prontuário SUAS</h1>
+        <h1>Login</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <label>

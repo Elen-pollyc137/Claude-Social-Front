@@ -1,0 +1,20 @@
+:root {
+  --color-primary:       #65C556;
+  --color-primary-dark:  #689E5F;
+  --color-accent:        #57EF40;
+  --color-muted:         #5A7056;
+  --color-surface-dark:  #3D463C;
+  --color-base:          #293827;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}

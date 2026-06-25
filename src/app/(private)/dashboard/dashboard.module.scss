@@ -1,0 +1,181 @@
+.page {
+  max-width: 1100px;
+}
+
+.heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-base);
+  margin: 0 0 4px;
+}
+
+.sub {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  margin: 0 0 28px;
+  text-transform: capitalize;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-left: 4px solid;
+  box-shadow: 0 1px 4px rgba(41, 56, 39, 0.06);
+}
+
+.cardIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+
+.cardLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cardValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-base);
+  line-height: 1;
+}
+
+.cardPrimary {
+  border-left-color: var(--color-primary);
+  .cardIcon { background: rgba(101, 197, 86, 0.12); color: var(--color-primary); }
+}
+
+.cardGreen {
+  border-left-color: var(--color-accent);
+  .cardIcon { background: rgba(87, 239, 64, 0.1); color: #3daa2e; }
+}
+
+.cardMuted {
+  border-left-color: var(--color-primary-dark);
+  .cardIcon { background: rgba(104, 158, 95, 0.12); color: var(--color-primary-dark); }
+}
+
+.cardDark {
+  border-left-color: var(--color-surface-dark);
+  .cardIcon { background: rgba(61, 70, 60, 0.1); color: var(--color-surface-dark); }
+}
+
+.section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(41, 56, 39, 0.06);
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid #eef3ee;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-base);
+  margin: 0;
+}
+
+.dateTag {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  background: #f0f4f0;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.empty {
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  th {
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #f8faf8;
+    border-bottom: 1px solid #eef3ee;
+  }
+
+  td {
+    padding: 14px 20px;
+    color: #2d3b2d;
+    border-bottom: 1px solid #f2f6f2;
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover td {
+    background: #f8faf8;
+  }
+}
+
+.hora {
+  font-weight: 700;
+  color: var(--color-base);
+  font-variant-numeric: tabular-nums;
+}
+
+.familia {
+  font-weight: 500;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge_AGENDADO      { background: #e8f5e9; color: #2e7d32; }
+.badge_CONFIRMADO    { background: #e3f2fd; color: #1565c0; }
+.badge_EM_ATENDIMENTO { background: #fff3e0; color: #e65100; }
+.badge_CONCLUIDO     { background: #e8f5e9; color: #1b5e20; }
+.badge_CANCELADO     { background: #fce4ec; color: #880e4f; }
+.badge_FALTOU        { background: #f3e5f5; color: #4a148c; }
+.badge_REAGENDADO    { background: #fff8e1; color: #f57f17; }
