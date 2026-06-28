@@ -1,5 +1,5 @@
 .page {
-  max-width: 1200px;
+  max-width: 1300px;
 }
 
 .pageHeader {
@@ -37,140 +37,49 @@
   &:hover { background: var(--color-primary-dark); }
 }
 
-.filters {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  align-items: center;
+/* ── Calendar layout ───────────────────────────────────────── */
+
+.calendarLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+  transition: grid-template-columns 0.2s ease;
+}
+
+.withPanel {
+  grid-template-columns: 1fr 360px;
+}
+
+/* ── Monthly calendar card ─────────────────────────────────── */
+
+.calendarCard {
   background: #fff;
-  border-radius: 10px;
-  padding: 14px 18px;
-  box-shadow: 0 1px 4px rgba(41, 56, 39, 0.06);
-}
-
-.inputBusca {
-  flex: 1;
-  min-width: 180px;
-  padding: 8px 12px;
-  border: 1px solid #d4e4d4;
-  border-radius: 7px;
-  font-size: 0.875rem;
-  outline: none;
-  font-family: inherit;
-
-  &:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(101, 197, 86, 0.12);
-  }
-}
-
-.inputFiltro {
-  padding: 8px 12px;
-  border: 1px solid #d4e4d4;
-  border-radius: 7px;
-  font-size: 0.875rem;
-  outline: none;
-  background: #fff;
-  font-family: inherit;
-
-  &:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(101, 197, 86, 0.12);
-  }
-}
-
-.btnFiltrar {
-  padding: 8px 18px;
-  background: var(--color-base);
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.15s;
-
-  &:hover { background: var(--color-surface-dark); }
-}
-
-.tableWrap {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(41, 56, 39, 0.06);
+  border-radius: 14px;
+  box-shadow: 0 1px 6px rgba(41, 56, 39, 0.08);
   overflow: hidden;
 }
 
-.empty {
-  padding: 48px;
-  text-align: center;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.875rem;
-
-  th {
-    padding: 12px 18px;
-    text-align: left;
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    background: #f8faf8;
-    border-bottom: 1px solid #eef3ee;
-    white-space: nowrap;
-  }
-
-  td {
-    padding: 13px 18px;
-    color: #2d3b2d;
-    border-bottom: 1px solid #f2f6f2;
-    vertical-align: middle;
-  }
-
-  tbody tr:last-child td { border-bottom: none; }
-  tbody tr:hover td { background: #f8faf8; }
-}
-
-.dataHora { font-weight: 600; color: var(--color-base); white-space: nowrap; }
-.familia { font-weight: 500; }
-
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.badge_AGENDADO       { background: #e8f5e9; color: #2e7d32; }
-.badge_CONFIRMADO     { background: #e3f2fd; color: #1565c0; }
-.badge_EM_ATENDIMENTO { background: #fff3e0; color: #e65100; }
-.badge_CONCLUIDO      { background: #d7f0d7; color: #1b5e20; }
-.badge_CANCELADO      { background: #fce4ec; color: #880e4f; }
-.badge_FALTOU         { background: #f3e5f5; color: #4a148c; }
-.badge_REAGENDADO     { background: #fff8e1; color: #f57f17; }
-
-.acoes {
+.calendarNav {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eef3ee;
 }
 
-.btnEdit {
-  padding: 5px 12px;
-  background: rgba(101, 197, 86, 0.1);
-  color: var(--color-primary-dark);
-  border: 1px solid rgba(101, 197, 86, 0.3);
-  border-radius: 6px;
-  font-size: 0.78rem;
-  font-weight: 500;
+.calNavBtn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #d4e4d4;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--color-base);
+  font-size: 1.2rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.15s;
 
   &:hover {
@@ -180,25 +89,287 @@
   }
 }
 
-.btnDelete {
-  padding: 5px 12px;
-  background: #fce4ec;
-  color: #c62828;
-  border: 1px solid #f8bbd0;
-  border-radius: 6px;
-  font-size: 0.78rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-
-  &:hover {
-    background: #c62828;
-    color: #fff;
-    border-color: #c62828;
-  }
+.calNavTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-base);
+  text-transform: capitalize;
 }
 
-/* Modal */
+.calendarWeekNames {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #f8faf8;
+  border-bottom: 1px solid #eef3ee;
+}
+
+.weekName {
+  padding: 10px 4px;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calDay {
+  min-height: 80px;
+  padding: 8px 6px 6px;
+  border: none;
+  border-right: 1px solid #f0f4f0;
+  border-bottom: 1px solid #f0f4f0;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  transition: background 0.1s;
+  text-align: left;
+
+  &:nth-child(7n) { border-right: none; }
+  &:hover { background: #f4fbf3; }
+}
+
+.calDayOther .calDayNum { color: #c8d8c8; }
+.calDayOther { background: #fafcfa; }
+
+.calDayToday .calDayNum {
+  background: var(--color-primary);
+  color: #fff;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.calDaySelected {
+  background: #f0fbef !important;
+  box-shadow: inset 0 0 0 2px var(--color-primary);
+}
+
+.calDayNum {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-base);
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.calDayDots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 0 2px;
+}
+
+.calDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.calDotMore {
+  font-size: 0.65rem;
+  color: var(--color-muted);
+  font-weight: 600;
+  line-height: 7px;
+}
+
+/* ── Daily panel ───────────────────────────────────────────── */
+
+.dailyPanel {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 1px 6px rgba(41, 56, 39, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dailyHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid #eef3ee;
+  background: #f8faf8;
+}
+
+.dailyWeekDay {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 2px;
+}
+
+.dailyDate {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-base);
+  margin: 0;
+}
+
+.dailyHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btnNovoSmall {
+  padding: 6px 12px;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+
+  &:hover { background: var(--color-primary-dark); }
+}
+
+.timeGrid {
+  overflow-y: auto;
+  max-height: 420px;
+  padding: 4px 0;
+}
+
+.timeRow {
+  display: flex;
+  align-items: flex-start;
+  min-height: 52px;
+  border-bottom: 1px solid #f4f7f4;
+
+  &:last-child { border-bottom: none; }
+}
+
+.timeLabel {
+  width: 52px;
+  min-width: 52px;
+  padding: 8px 10px 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.timeSlot {
+  flex: 1;
+  padding: 4px 8px 4px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeSlotEmpty {
+  height: 1px;
+  background: #eef3ee;
+  margin-top: 12px;
+  border-radius: 2px;
+}
+
+.timeAppt {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 10px;
+  border-left: 3px solid var(--color-primary);
+  background: #f8faf8;
+  border-radius: 0 7px 7px 0;
+  cursor: pointer;
+  text-align: left;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  width: 100%;
+  transition: background 0.1s;
+
+  &:hover { background: #f0f4f0; }
+}
+
+.timeApptHora {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.timeApptTitulo {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-base);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timeApptFamilia {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Notes section ─────────────────────────────────────────── */
+
+.notasSection {
+  padding: 14px 18px;
+  border-top: 1px solid #eef3ee;
+}
+
+.notasLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 8px;
+}
+
+.notasTextarea {
+  width: 100%;
+  resize: vertical;
+  padding: 10px 12px;
+  border: 1px solid #d4e4d4;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  color: var(--color-base);
+  background: #fafcfa;
+  outline: none;
+  min-height: 90px;
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(101, 197, 86, 0.12);
+    background: #fff;
+  }
+
+  &::placeholder { color: #9eb89e; }
+}
+
+/* ── Modal ─────────────────────────────────────────────────── */
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -368,3 +539,13 @@
     cursor: not-allowed;
   }
 }
+
+/* ── Status badges (modal) ─────────────────────────────────── */
+
+.badge_AGENDADO       { background: #e8f5e9; color: #2e7d32; }
+.badge_CONFIRMADO     { background: #e3f2fd; color: #1565c0; }
+.badge_EM_ATENDIMENTO { background: #fff3e0; color: #e65100; }
+.badge_CONCLUIDO      { background: #d7f0d7; color: #1b5e20; }
+.badge_CANCELADO      { background: #fce4ec; color: #880e4f; }
+.badge_FALTOU         { background: #f3e5f5; color: #4a148c; }
+.badge_REAGENDADO     { background: #fff8e1; color: #f57f17; }
