@@ -170,6 +170,19 @@ export default function DashboardPage() {
           </table>
         )}
       </section>
+
+      <section className={`${styles.section} ${styles.mapSection}`}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Localização — Porteirinha, MG</h2>
+        </div>
+        <iframe
+          className={styles.mapFrame}
+          title="Mapa de Porteirinha, MG"
+          src="https://www.google.com/maps?q=Porteirinha,+MG&output=embed"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </section>
     </div>
   );
 }
