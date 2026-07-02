@@ -11,7 +11,7 @@ const pageTitles: Record<string, string> = {
   "/familias": "Famílias",
   "/agendamentos": "Agendamentos",
   "/usuarios": "Usuários",
-  "/prontuarios": "Prontuários",
+  "/prontuarios": "Relatórios",
 };
 
 const perfilLabel: Record<string, string> = {
