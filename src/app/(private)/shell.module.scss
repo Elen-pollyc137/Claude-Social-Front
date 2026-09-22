@@ -14,6 +14,20 @@
 .content {
   flex: 1;
   overflow-y: auto;
-  background: #f0f4f0;
-  padding: 28px 32px;
+  background: var(--color-background);
+}
+
+.contentInner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px 40px 60px;
+
+  @media (max-width: 1200px) {
+    padding: 24px 28px 48px;
+  }
+
+  @media (max-width: 640px) {
+    padding: 20px 16px 40px;
+  }
 }

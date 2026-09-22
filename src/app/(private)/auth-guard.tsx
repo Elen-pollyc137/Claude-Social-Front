@@ -25,7 +25,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       <Sidebar />
       <div className={styles.right}>
         <Navbar />
-        <main className={styles.content}>{children}</main>
+        <main className={styles.content}>
+          <div className={styles.contentInner}>{children}</div>
+        </main>
       </div>
     </div>
   );

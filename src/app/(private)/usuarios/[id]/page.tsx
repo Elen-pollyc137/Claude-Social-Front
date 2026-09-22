@@ -9,23 +9,15 @@ import {
   alterarStatusUsuario,
 } from "@/src/services/usuarios";
 import {
-  PerfilUsuario,
   StatusUsuario,
   UsuarioDetalhado,
+  perfilUsuarioLabel,
+  statusUsuarioLabel,
+  statusUsuarioTone,
 } from "@/src/types/usuario.type";
+import Button from "@/src/components/ui/Button";
+import Badge from "@/src/components/ui/Badge";
 import styles from "../usuarios.module.scss";
-
-const perfilLabel: Record<PerfilUsuario, string> = {
-  ADMINISTRADOR: "Administrador",
-  COORDENADOR: "Coordenador",
-  TECNICO: "Técnico",
-  CONSULTA: "Consulta",
-};
-
-const statusLabel: Record<StatusUsuario, string> = {
-  ATIVO: "Ativo",
-  INATIVO: "Inativo",
-};
 
 type MovimentacaoItem = {
   id: string;
@@ -142,34 +134,26 @@ export default function UsuarioDetalhePage({
             ← Usuários
           </Link>
           <h1>{usuario.nome}</h1>
-          <span style={{ fontSize: "0.875rem", color: "#64748b" }}>{usuario.email}</span>
+          <span className={styles.detailEmail}>{usuario.email}</span>
         </div>
         <div className={styles.detailActions}>
-          <span
-            className={`${styles.badge} ${
-              styles[`badge_${usuario.status}` as keyof typeof styles]
-            }`}
-          >
-            {statusLabel[usuario.status]}
-          </span>
-          <button
-            className={styles.btnEdit}
-            onClick={handleAlternarStatus}
-            disabled={processando}
-          >
+          <Badge tone={statusUsuarioTone[usuario.status]} dot>
+            {statusUsuarioLabel[usuario.status]}
+          </Badge>
+          <Button variant="secondary" onClick={handleAlternarStatus} disabled={processando}>
             {usuario.status === "ATIVO" ? "Inativar" : "Ativar"}
-          </button>
-          <button className={styles.btnDelete} onClick={handleExcluir}>
+          </Button>
+          <Button variant="danger" onClick={handleExcluir}>
             Excluir
-          </button>
+          </Button>
         </div>
       </div>
 
       <div className={styles.card}>
         <p className={styles.sectionTitle}>Dados do usuário</p>
         <div className={styles.infoGrid}>
-          {infoItem("Perfil", perfilLabel[usuario.perfil] ?? usuario.perfil)}
-          {infoItem("Status", statusLabel[usuario.status])}
+          {infoItem("Perfil", perfilUsuarioLabel[usuario.perfil] ?? usuario.perfil)}
+          {infoItem("Status", statusUsuarioLabel[usuario.status])}
           {infoItem("Cadastrado em", new Date(usuario.criadoEm).toLocaleDateString("pt-BR"))}
           {infoItem(
             "Atualizado em",

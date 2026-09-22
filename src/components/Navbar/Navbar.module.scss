@@ -1,31 +1,53 @@
 .navbar {
   height: 64px;
-  background: #fff;
-  border-bottom: 1px solid #e2ede2;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 28px;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(41, 56, 39, 0.06);
-}
-
-.pageTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-base);
 }
 
 .right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
 }
 
-.user {
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: #f3f6f3;
+    color: var(--color-text);
+  }
+}
+
+.userTrigger {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 6px 8px 6px 6px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #f3f6f3;
+  }
 }
 
 .avatar {
@@ -46,33 +68,22 @@
   display: flex;
   flex-direction: column;
   line-height: 1.2;
+  text-align: left;
 }
 
 .userName {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-base);
+  color: var(--color-text);
 }
 
 .userPerfil {
   font-size: 0.7rem;
-  color: var(--color-muted);
+  color: var(--color-text-secondary);
   text-transform: capitalize;
 }
 
-.logoutBtn {
-  padding: 7px 16px;
-  background: transparent;
-  border: 1px solid var(--color-primary);
-  color: var(--color-primary-dark);
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: background 0.15s, color 0.15s;
-
-  &:hover {
-    background: var(--color-primary);
-    color: #fff;
-  }
+.chevron {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
 }

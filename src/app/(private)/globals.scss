@@ -1,10 +1,35 @@
 :root {
-  --color-primary:       #65C556;
-  --color-primary-dark:  #689E5F;
-  --color-accent:        #57EF40;
-  --color-muted:         #5A7056;
-  --color-surface-dark:  #3D463C;
-  --color-base:          #293827;
+  --color-primary: #36a852;
+  --color-primary-hover: #2f9548;
+  --color-primary-soft: #eaf7ed;
+
+  --color-background: #f7f9f7;
+  --color-surface: #ffffff;
+
+  --color-text: #18231b;
+  --color-text-secondary: #66736a;
+  --color-text-muted: #98a29b;
+
+  --color-border: #e7ece7;
+
+  --color-danger: #dc4545;
+  --color-danger-soft: #fff0f0;
+
+  --color-warning: #d99700;
+  --color-warning-soft: #fff8e6;
+
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.03), 0 2px 8px rgba(16, 24, 40, 0.03);
+
+  /* aliases legados — mantêm o restante do app funcionando sem edição arquivo a arquivo */
+  --color-primary-dark: var(--color-primary-hover);
+  --color-accent: #57ef40;
+  --color-muted: var(--color-text-secondary);
+  --color-surface-dark: #3d463c;
+  --color-base: var(--color-text);
 }
 
 *,
@@ -15,6 +40,5 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
   overflow: hidden;
 }

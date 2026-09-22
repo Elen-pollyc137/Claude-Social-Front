@@ -1,6 +1,23 @@
 export type PerfilUsuario = "ADMINISTRADOR" | "COORDENADOR" | "TECNICO" | "CONSULTA";
 export type StatusUsuario = "ATIVO" | "INATIVO";
 
+export const perfilUsuarioLabel: Record<PerfilUsuario, string> = {
+  ADMINISTRADOR: "Administrador",
+  COORDENADOR: "Coordenador",
+  TECNICO: "Técnico",
+  CONSULTA: "Consulta",
+};
+
+export const statusUsuarioLabel: Record<StatusUsuario, string> = {
+  ATIVO: "Ativo",
+  INATIVO: "Inativo",
+};
+
+export const statusUsuarioTone: Record<StatusUsuario, "success" | "neutral"> = {
+  ATIVO: "success",
+  INATIVO: "neutral",
+};
+
 export type Usuario = {
   id: string;
   nome: string;

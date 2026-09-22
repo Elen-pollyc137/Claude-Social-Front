@@ -145,7 +145,7 @@ export default function NovoUsuarioPage() {
           </div>
         </div>
 
-        {erro && <p style={{ color: "#b91c1c", marginBottom: "1rem" }}>{erro}</p>}
+        {erro && <p style={{ color: "var(--color-danger)", marginBottom: "1rem" }}>{erro}</p>}
 
         <div className={styles.formFooter}>
           <Link href="/usuarios" className={styles.btnCancel}>

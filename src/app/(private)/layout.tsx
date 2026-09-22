@@ -1,5 +1,10 @@
+import { Inter } from "next/font/google";
 import "./globals.scss";
 import AuthGuard from "./auth-guard";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Claude Social",
@@ -13,7 +18,7 @@ export default function PrivateLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body>
+      <body className={inter.className}>
         <AuthGuard>{children}</AuthGuard>
       </body>
     </html>

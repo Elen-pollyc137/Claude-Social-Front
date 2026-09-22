@@ -1,0 +1,34 @@
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.addressItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.addressLines {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.emptyValue {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,29 @@
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--color-text);
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}

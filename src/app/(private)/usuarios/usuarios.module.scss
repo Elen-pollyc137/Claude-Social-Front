@@ -4,33 +4,10 @@
   padding: 2rem 1rem;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 600;
-    color: #1a1a2e;
-  }
-}
-
-.btnNovo {
-  display: inline-block;
-  padding: 0.5rem 1.25rem;
-  background: #3b82f6;
-  color: #fff;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    background: #2563eb;
-  }
+.resultCount {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.75rem;
 }
 
 .filters {
@@ -50,8 +27,8 @@
 
   &:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-soft);
   }
 }
 
@@ -61,7 +38,7 @@
 
 .empty {
   text-align: center;
-  color: #64748b;
+  color: var(--color-text-secondary);
   padding: 2rem 0;
   font-size: 0.875rem;
 }
@@ -89,67 +66,32 @@
   }
 }
 
-.badge {
-  display: inline-block;
-  padding: 0.2rem 0.6rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-
-  &.badge_ATIVO {
-    background: #dcfce7;
-    color: #166534;
-  }
-
-  &.badge_INATIVO {
-    background: #f1f5f9;
-    color: #475569;
-  }
-}
-
-.actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.view,
-.edit,
-.delete {
-  display: inline-block;
-  padding: 0.35rem 0.75rem;
-  border: none;
-  border-radius: 0.375rem;
-  font-size: 0.8rem;
-  font-weight: 500;
+.clickableRow {
   cursor: pointer;
-  text-decoration: none;
-  text-align: center;
 }
 
-.view {
-  background: #f1f5f9;
-  color: #334155;
-
-  &:hover {
-    background: #e2e8f0;
-  }
+.actionsCell {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
 }
 
-.edit {
-  background: #e0f2fe;
-  color: #0369a1;
+.rowMenuTrigger {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
 
   &:hover {
-    background: #bae6fd;
-  }
-}
-
-.delete {
-  background: #fee2e2;
-  color: #b91c1c;
-
-  &:hover {
-    background: #fecaca;
+    background: #f1f5f9;
+    color: var(--color-text);
   }
 }
 
@@ -239,8 +181,8 @@
 
   &:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-soft);
   }
 }
 
@@ -272,7 +214,7 @@
 
 .btnSalvar {
   padding: 0.5rem 1.25rem;
-  background: #3b82f6;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 0.375rem;
@@ -281,7 +223,7 @@
   cursor: pointer;
 
   &:hover {
-    background: #2563eb;
+    background: var(--color-primary-hover);
   }
 
   &:disabled {
@@ -319,46 +261,15 @@
   }
 }
 
+.detailEmail {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
 .detailActions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.btnEdit {
-  padding: 0.5rem 1rem;
-  background: #e0f2fe;
-  color: #0369a1;
-  border: none;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    background: #bae6fd;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: default;
-  }
-}
-
-.btnDelete {
-  padding: 0.5rem 1rem;
-  background: #fee2e2;
-  color: #b91c1c;
-  border: none;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-
-  &:hover {
-    background: #fecaca;
-  }
 }
 
 .infoGrid {
@@ -413,8 +324,8 @@
   border-radius: 9999px;
   font-size: 0.72rem;
   font-weight: 600;
-  background: #eef2ff;
-  color: #4338ca;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-hover);
   white-space: nowrap;
 }
 

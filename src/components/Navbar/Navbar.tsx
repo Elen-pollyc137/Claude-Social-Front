@@ -1,18 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { Bell, ChevronDown } from "lucide-react";
 import { getMe, logout } from "@/src/services/auth";
 import { Usuario } from "@/src/types/auth.type";
+import DropdownMenu from "@/src/components/ui/DropdownMenu";
 import styles from "./Navbar.module.scss";
-
-const pageTitles: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/familias": "Famílias",
-  "/agendamentos": "Agendamentos",
-  "/usuarios": "Usuários",
-  "/prontuarios": "Relatórios",
-};
 
 const perfilLabel: Record<string, string> = {
   ADMINISTRADOR: "Administrador",
@@ -31,7 +24,6 @@ function iniciais(nome: string) {
 }
 
 export default function Navbar() {
-  const pathname = usePathname();
   const [usuario, setUsuario] = useState<Usuario | null>(null);
 
   useEffect(() => {
@@ -40,27 +32,36 @@ export default function Navbar() {
       .catch(() => {});
   }, []);
 
-  const title = pageTitles[pathname] ?? "CRAS Digital";
-
   return (
     <header className={styles.navbar}>
-      <span className={styles.pageTitle}>{title}</span>
+      <div />
 
       <div className={styles.right}>
-        {usuario && (
-          <div className={styles.user}>
-            <div className={styles.avatar}>{iniciais(usuario.nome)}</div>
-            <div className={styles.userInfo}>
-              <span className={styles.userName}>{usuario.nome}</span>
-              <span className={styles.userPerfil}>
-                {perfilLabel[usuario.perfil] ?? usuario.perfil}
-              </span>
-            </div>
-          </div>
-        )}
-        <button className={styles.logoutBtn} onClick={logout}>
-          Sair
+        <button type="button" className={styles.iconBtn} title="Notificações">
+          <Bell size={18} strokeWidth={2} />
         </button>
+
+        {usuario && (
+          <DropdownMenu
+            trigger={({ onClick }) => (
+              <button type="button" className={styles.userTrigger} onClick={onClick}>
+                <div className={styles.avatar}>{iniciais(usuario.nome)}</div>
+                <div className={styles.userInfo}>
+                  <span className={styles.userName}>{usuario.nome}</span>
+                  <span className={styles.userPerfil}>
+                    {perfilLabel[usuario.perfil] ?? usuario.perfil}
+                  </span>
+                </div>
+                <ChevronDown size={16} className={styles.chevron} />
+              </button>
+            )}
+          >
+            <DropdownMenu.Item disabled>Minha conta</DropdownMenu.Item>
+            <DropdownMenu.Item disabled>Configurações</DropdownMenu.Item>
+            <DropdownMenu.Divider />
+            <DropdownMenu.Item onClick={logout}>Sair</DropdownMenu.Item>
+          </DropdownMenu>
+        )}
       </div>
     </header>
   );

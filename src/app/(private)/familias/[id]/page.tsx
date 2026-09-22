@@ -3,38 +3,23 @@
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { buscarFamilia, excluirFamilia } from "@/src/services/familias";
-import { Familia, StatusFamilia } from "@/src/types/familia.type";
+import { buscarFamilia } from "@/src/services/familias";
+import { excluirMembro } from "@/src/services/membros";
+import { Familia } from "@/src/types/familia.type";
+import { MembroFamiliar } from "@/src/types/membro.type";
 import styles from "../familias.module.scss";
-
-type MembroFamiliar = {
-  id: string;
-  nome: string;
-  cpf?: string;
-  parentesco?: string;
-  dataNascimento?: string;
-  sexo?: string;
-  renda?: number;
-};
+import detailStyles from "./detail.module.scss";
+import FamilyHeader from "./components/FamilyHeader";
+import FamilyTabs, { FamilyTab } from "./components/FamilyTabs";
+import FamilyDataCard from "./components/FamilyDataCard";
+import CadUnicoCard from "./components/CadUnicoCard";
+import FamilyMembers from "./components/FamilyMembers";
+import AtendimentosTab from "./AtendimentosTab";
+import DocumentosTab from "./DocumentosTab";
 
 type FamiliaDetalhada = Familia & {
   membros?: MembroFamiliar[];
 };
-
-const statusLabel: Record<StatusFamilia, string> = {
-  ATIVA: "Ativa",
-  INATIVA: "Inativa",
-  EM_ACOMPANHAMENTO: "Em acompanhamento",
-};
-
-function infoItem(label: string, value?: string | null) {
-  return (
-    <div className={styles.infoItem}>
-      <span>{label}</span>
-      <span>{value || "—"}</span>
-    </div>
-  );
-}
 
 export default function FamiliaDetalhePage({
   params,
@@ -45,18 +30,24 @@ export default function FamiliaDetalhePage({
   const router = useRouter();
   const [familia, setFamilia] = useState<FamiliaDetalhada | null>(null);
   const [carregando, setCarregando] = useState(true);
+  const [aba, setAba] = useState<FamilyTab>("visao-geral");
 
-  useEffect(() => {
-    buscarFamilia(id)
+  function carregar() {
+    return buscarFamilia(id)
       .then((data) => setFamilia(data as FamiliaDetalhada))
       .catch(() => router.push("/familias"))
       .finally(() => setCarregando(false));
+  }
+
+  useEffect(() => {
+    carregar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, router]);
 
-  async function handleExcluir() {
-    if (!confirm("Deseja excluir esta família?")) return;
-    await excluirFamilia(id);
-    router.push("/familias");
+  async function handleExcluirMembro(membroId: string) {
+    if (!confirm("Deseja excluir este membro?")) return;
+    await excluirMembro(membroId);
+    carregar();
   }
 
   if (carregando) {
@@ -69,92 +60,36 @@ export default function FamiliaDetalhePage({
 
   if (!familia) return null;
 
+  const membros = familia.membros ?? [];
+
   return (
-    <main className={styles.detailPage}>
-      <div className={styles.detailHeader}>
-        <div>
-          <Link href="/familias" className={styles.btnBack}>
-            ← Famílias
-          </Link>
-          <h1>{familia.responsavelNome}</h1>
-          {familia.codigoFamiliar && (
-            <span style={{ fontSize: "0.875rem", color: "#64748b" }}>
-              Código: {familia.codigoFamiliar}
-            </span>
-          )}
-        </div>
-        <div className={styles.detailActions}>
-          <span
-            className={`${styles.badge} ${
-              styles[`badge_${familia.status}` as keyof typeof styles]
-            }`}
-          >
-            {statusLabel[familia.status]}
-          </span>
-          <Link href={`/familias/${id}/editar`} className={styles.btnEdit}>
-            Editar
-          </Link>
-          <button className={styles.btnDelete} onClick={handleExcluir}>
-            Excluir
-          </button>
-        </div>
-      </div>
+    <main className={`${styles.detailPage} ${detailStyles.page}`}>
+      <p className={detailStyles.breadcrumb}>
+        <Link href="/familias">Famílias</Link>
+        <span>/</span>
+        {familia.responsavelNome}
+      </p>
 
-      <div className={styles.card}>
-        <p className={styles.sectionTitle}>Dados do responsável</p>
-        <div className={styles.infoGrid}>
-          {infoItem("CPF", familia.responsavelCpf)}
-          {infoItem("NIS", familia.responsavelNis)}
-          {infoItem("Telefone", familia.telefone)}
-          {infoItem("E-mail", familia.email)}
-          {infoItem("Território", familia.territorio)}
-          {infoItem(
-            "Cadastrado em",
-            new Date(familia.criadoEm).toLocaleDateString("pt-BR")
-          )}
-        </div>
-      </div>
+      <FamilyHeader familia={familia} />
 
-      <div className={styles.card}>
-        <p className={styles.sectionTitle}>Endereço</p>
-        <div className={styles.infoGrid}>
-          {infoItem("CEP", familia.cep)}
-          {infoItem("Endereço", familia.endereco)}
-          {infoItem("Número", familia.numero)}
-          {infoItem("Complemento", familia.complemento)}
-          {infoItem("Bairro", familia.bairro)}
-          {infoItem("Cidade", familia.cidade)}
-          {infoItem("Estado", familia.estado)}
-        </div>
-      </div>
+      <FamilyTabs active={aba} onChange={setAba} />
 
-      {familia.membros && familia.membros.length > 0 && (
-        <div className={styles.card}>
-          <p className={styles.sectionTitle}>
-            Membros ({familia.membros.length})
-          </p>
-          <table className={styles.membrosTable}>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Parentesco</th>
-                <th>Sexo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {familia.membros.map((m) => (
-                <tr key={m.id}>
-                  <td>{m.nome}</td>
-                  <td>{m.cpf || "—"}</td>
-                  <td>{m.parentesco || "—"}</td>
-                  <td>{m.sexo || "—"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {aba === "visao-geral" && (
+        <div className={detailStyles.overviewGrid}>
+          <FamilyDataCard familia={familia} />
+
+          <div className={detailStyles.rightColumn}>
+            <CadUnicoCard familia={familia} />
+          </div>
         </div>
       )}
+
+      {aba === "membros" && (
+        <FamilyMembers familiaId={id} membros={membros} onExcluir={handleExcluirMembro} />
+      )}
+
+      {aba === "atendimentos" && <AtendimentosTab familiaId={id} />}
+      {aba === "documentos" && <DocumentosTab familiaId={id} />}
     </main>
   );
 }
