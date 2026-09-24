@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { api } from "@/src/services/api";
-import { Agendamento } from "@/src/types/agendamento.type";
+import Link from "next/link";
+import { buscarResumoDashboard } from "@/src/services/dashboard";
+import type { DashboardResumo } from "@/src/types/dashboard.type";
 import styles from "./dashboard.module.scss";
 
 const tipoLabel: Record<string, string> = {
@@ -10,6 +11,8 @@ const tipoLabel: Record<string, string> = {
   VISITA_DOMICILIAR: "Visita domiciliar",
   ENCAMINHAMENTO: "Encaminhamento",
   ACOMPANHAMENTO_FAMILIAR: "Acompanhamento",
+  PARECER_SOCIAL: "Parecer social",
+  BENEFICIO_EVENTUAL: "Benefício eventual",
 };
 
 const statusLabel: Record<string, string> = {
@@ -29,38 +32,35 @@ function formatHora(iso: string) {
   });
 }
 
-function dataHoje() {
-  const d = new Date();
-  const inicio = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0).toISOString();
-  const fim = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59).toISOString();
-  return { inicio, fim };
-}
-
 export default function DashboardPage() {
-  const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
-  const [totalFamilias, setTotalFamilias] = useState<number | null>(null);
+  const [resumo, setResumo] = useState<DashboardResumo | null>(null);
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState(false);
 
   useEffect(() => {
-    const { inicio, fim } = dataHoje();
-
-    Promise.all([
-      api.get<Agendamento[]>("/agendamentos", {
-        params: { dataInicio: inicio, dataFim: fim },
-      }),
-      api.get<unknown[]>("/familias"),
-    ])
-      .then(([resAgend, resFamilias]) => {
-        setAgendamentos(resAgend.data);
-        setTotalFamilias(resFamilias.data.length);
-      })
+    buscarResumoDashboard()
+      .then(setResumo)
+      .catch(() => setErro(true))
       .finally(() => setCarregando(false));
   }, []);
 
-  const confirmados = agendamentos.filter(
-    (a) => a.status === "CONFIRMADO" || a.status === "EM_ATENDIMENTO"
-  ).length;
-  const pendentes = agendamentos.filter((a) => a.status === "AGENDADO").length;
+  const agendamentos = resumo?.agendamentosHoje.lista ?? [];
+
+  // Mostra "—" enquanto carrega ou se o resumo falhou.
+  function valor(n: number | undefined) {
+    return carregando || n === undefined ? "—" : n;
+  }
+
+  const indicadores = [
+    {
+      label: "Famílias em acompanhamento",
+      valor: resumo?.familias.porStatus.EM_ACOMPANHAMENTO,
+      href: "/familias",
+    },
+    { label: "Atendimentos no mês", valor: resumo?.atendimentosMes, href: "/prontuarios" },
+    { label: "Encaminhamentos em aberto", valor: resumo?.encaminhamentosAbertos },
+    { label: "Benefícios aguardando decisão", valor: resumo?.beneficiosAguardandoDecisao },
+  ];
 
   const dataExtenso = new Date().toLocaleDateString("pt-BR", {
     weekday: "long",
@@ -83,7 +83,7 @@ export default function DashboardPage() {
           </div>
           <span className={styles.cardLabel}>Agendamentos hoje</span>
           <span className={styles.cardValue}>
-            {carregando ? "—" : agendamentos.length}
+            {valor(resumo?.agendamentosHoje.total)}
           </span>
         </div>
 
@@ -95,7 +95,7 @@ export default function DashboardPage() {
           </div>
           <span className={styles.cardLabel}>Confirmados</span>
           <span className={styles.cardValue}>
-            {carregando ? "—" : confirmados}
+            {valor(resumo?.agendamentosHoje.confirmados)}
           </span>
         </div>
 
@@ -107,7 +107,7 @@ export default function DashboardPage() {
           </div>
           <span className={styles.cardLabel}>Pendentes</span>
           <span className={styles.cardValue}>
-            {carregando ? "—" : pendentes}
+            {valor(resumo?.agendamentosHoje.pendentes)}
           </span>
         </div>
 
@@ -122,9 +122,29 @@ export default function DashboardPage() {
           </div>
           <span className={styles.cardLabel}>Famílias cadastradas</span>
           <span className={styles.cardValue}>
-            {carregando || totalFamilias === null ? "—" : totalFamilias}
+            {valor(resumo?.familias.total)}
           </span>
         </div>
+      </div>
+
+      <div className={styles.indicadores}>
+        {indicadores.map((ind) => {
+          const conteudo = (
+            <>
+              <span className={styles.indicadorValor}>{valor(ind.valor)}</span>
+              <span className={styles.indicadorLabel}>{ind.label}</span>
+            </>
+          );
+          return ind.href ? (
+            <Link key={ind.label} href={ind.href} className={styles.indicador}>
+              {conteudo}
+            </Link>
+          ) : (
+            <div key={ind.label} className={styles.indicador}>
+              {conteudo}
+            </div>
+          );
+        })}
       </div>
 
       <section className={styles.section}>
@@ -137,6 +157,8 @@ export default function DashboardPage() {
 
         {carregando ? (
           <p className={styles.empty}>Carregando…</p>
+        ) : erro ? (
+          <p className={styles.empty}>Não foi possível carregar o resumo do dia.</p>
         ) : agendamentos.length === 0 ? (
           <p className={styles.empty}>Nenhum agendamento para hoje.</p>
         ) : (

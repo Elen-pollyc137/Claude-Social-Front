@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { MoreHorizontal, Printer, Download, Pencil, Trash2 } from "lucide-react";
 import { Familia } from "@/src/types/familia.type";
+import { obterPdfProntuario } from "@/src/services/familias";
 import Button from "@/src/components/ui/Button";
 import DropdownMenu from "@/src/components/ui/DropdownMenu";
+import PdfPreviewModal from "@/src/components/ui/PdfPreviewModal";
 import StatusBadge from "../StatusBadge";
 import DeleteFamilyModal from "../DeleteFamilyModal";
 import styles from "./styles.module.scss";
@@ -28,6 +30,7 @@ function exportarDados(familia: Familia) {
 
 export default function FamilyHeader({ familia }: { familia: Familia }) {
   const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
+  const [fichaAberta, setFichaAberta] = useState(false);
 
   const metaPartes = [
     familia.numeroPasta ? `Pasta ${familia.numeroPasta}` : null,
@@ -57,7 +60,7 @@ export default function FamilyHeader({ familia }: { familia: Familia }) {
           <DropdownMenu.Item href={`/familias/${familia.id}/editar`}>
             <Pencil size={15} /> Editar
           </DropdownMenu.Item>
-          <DropdownMenu.Item onClick={() => window.print()}>
+          <DropdownMenu.Item onClick={() => setFichaAberta(true)}>
             <Printer size={15} /> Imprimir ficha
           </DropdownMenu.Item>
           <DropdownMenu.Item onClick={() => exportarDados(familia)}>
@@ -69,6 +72,15 @@ export default function FamilyHeader({ familia }: { familia: Familia }) {
           </DropdownMenu.Item>
         </DropdownMenu>
       </div>
+
+      {fichaAberta && (
+        <PdfPreviewModal
+          titulo={`Prontuário — ${familia.responsavelNome}`}
+          nomeArquivo={`prontuario-${familia.numeroPasta ?? familia.id.slice(0, 8)}.pdf`}
+          carregar={() => obterPdfProntuario(familia.id)}
+          onClose={() => setFichaAberta(false)}
+        />
+      )}
 
       {modalExcluirAberto && (
         <DeleteFamilyModal

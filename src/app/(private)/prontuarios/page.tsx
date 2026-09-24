@@ -11,6 +11,8 @@ const tipoLabel: Record<TipoAtendimento, string> = {
   VISITA_DOMICILIAR: "Visita domiciliar",
   ENCAMINHAMENTO: "Encaminhamento",
   ACOMPANHAMENTO_FAMILIAR: "Acompanhamento familiar",
+  PARECER_SOCIAL: "Parecer social",
+  BENEFICIO_EVENTUAL: "Benefício eventual",
 };
 
 const tipoColor: Record<TipoAtendimento, string> = {
@@ -18,6 +20,8 @@ const tipoColor: Record<TipoAtendimento, string> = {
   VISITA_DOMICILIAR: "var(--color-accent)",
   ENCAMINHAMENTO: "var(--color-primary-dark)",
   ACOMPANHAMENTO_FAMILIAR: "var(--color-surface-dark)",
+  PARECER_SOCIAL: "var(--color-warning)",
+  BENEFICIO_EVENTUAL: "var(--color-danger)",
 };
 
 function localizacaoDe(a: Atendimento): string {

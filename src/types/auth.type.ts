@@ -24,3 +24,13 @@ export type MeResponse = {
     atualizadoEm: string;
   };
 };
+
+export type AtualizarMeRequest = {
+  nome?: string;
+  email?: string;
+};
+
+export type AlterarSenhaRequest = {
+  senhaAtual: string;
+  novaSenha: string;
+};

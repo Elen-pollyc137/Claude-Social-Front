@@ -151,3 +151,9 @@ export async function atualizarFamilia(
 export async function excluirFamilia(id: string): Promise<void> {
   await api.delete(`/familias/${id}`);
 }
+
+// Retorna uma URL local (blob) do PDF do prontuário; quem chama deve liberar com URL.revokeObjectURL.
+export async function obterPdfProntuario(familiaId: string): Promise<string> {
+  const response = await api.get(`/familias/${familiaId}/prontuario/pdf`, { responseType: "blob" });
+  return window.URL.createObjectURL(new Blob([response.data], { type: "application/pdf" }));
+}

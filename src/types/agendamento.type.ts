@@ -2,7 +2,9 @@ export type TipoAtendimento =
   | "INDIVIDUAL"
   | "VISITA_DOMICILIAR"
   | "ENCAMINHAMENTO"
-  | "ACOMPANHAMENTO_FAMILIAR";
+  | "ACOMPANHAMENTO_FAMILIAR"
+  | "PARECER_SOCIAL"
+  | "BENEFICIO_EVENTUAL";
 
 export type StatusAgendamento =
   | "AGENDADO"

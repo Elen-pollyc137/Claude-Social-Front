@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Bell, ChevronDown } from "lucide-react";
-import { getMe, logout } from "@/src/services/auth";
+import { ChevronDown } from "lucide-react";
+import { getMe, logout, USUARIO_ATUALIZADO_EVENT } from "@/src/services/auth";
 import { Usuario } from "@/src/types/auth.type";
 import DropdownMenu from "@/src/components/ui/DropdownMenu";
+import NotificacoesAgenda from "./NotificacoesAgenda";
 import styles from "./Navbar.module.scss";
 
 const perfilLabel: Record<string, string> = {
@@ -30,6 +31,12 @@ export default function Navbar() {
     getMe()
       .then((res) => setUsuario(res.usuario))
       .catch(() => {});
+
+    function handleAtualizado(e: Event) {
+      setUsuario((e as CustomEvent<Usuario>).detail);
+    }
+    window.addEventListener(USUARIO_ATUALIZADO_EVENT, handleAtualizado);
+    return () => window.removeEventListener(USUARIO_ATUALIZADO_EVENT, handleAtualizado);
   }, []);
 
   return (
@@ -37,9 +44,7 @@ export default function Navbar() {
       <div />
 
       <div className={styles.right}>
-        <button type="button" className={styles.iconBtn} title="Notificações">
-          <Bell size={18} strokeWidth={2} />
-        </button>
+        {usuario && <NotificacoesAgenda tecnicoId={usuario.id} />}
 
         {usuario && (
           <DropdownMenu
@@ -56,8 +61,8 @@ export default function Navbar() {
               </button>
             )}
           >
-            <DropdownMenu.Item disabled>Minha conta</DropdownMenu.Item>
-            <DropdownMenu.Item disabled>Configurações</DropdownMenu.Item>
+            <DropdownMenu.Item href="/perfil">Minha conta</DropdownMenu.Item>
+            <DropdownMenu.Item href="/configuracoes">Configurações</DropdownMenu.Item>
             <DropdownMenu.Divider />
             <DropdownMenu.Item onClick={logout}>Sair</DropdownMenu.Item>
           </DropdownMenu>

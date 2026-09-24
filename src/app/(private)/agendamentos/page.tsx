@@ -44,6 +44,8 @@ const tipoLabel: Record<TipoAtendimento, string> = {
   VISITA_DOMICILIAR: "Visita domiciliar",
   ENCAMINHAMENTO: "Encaminhamento",
   ACOMPANHAMENTO_FAMILIAR: "Acompanhamento familiar",
+  PARECER_SOCIAL: "Parecer social",
+  BENEFICIO_EVENTUAL: "Benefício eventual",
 };
 
 const statusLabel: Record<StatusAgendamento, string> = {
