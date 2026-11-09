@@ -1,3 +1,5 @@
+import type { LotacaoUsuario } from "./usuario.type";
+
 export type PerfilUsuario = "ADMINISTRADOR" | "COORDENADOR" | "TECNICO" | "CONSULTA";
 
 export type Usuario = {
@@ -6,6 +8,7 @@ export type Usuario = {
   email: string;
   perfil: PerfilUsuario;
   status: string;
+  vinculosUnidade: LotacaoUsuario[];
 };
 
 export type LoginRequest = {

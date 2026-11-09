@@ -12,6 +12,7 @@ export type UsuarioBody = {
   senha: string;
   perfil: PerfilUsuario;
   status?: StatusUsuario;
+  unidades: { unidadeId: string; funcao: string }[];
 };
 
 export async function listarUsuarios(): Promise<Usuario[]> {
@@ -31,7 +32,7 @@ export async function criarUsuario(dados: UsuarioBody): Promise<Usuario> {
 
 export async function atualizarUsuario(
   id: string,
-  dados: Partial<UsuarioBody>
+  dados: Partial<Omit<UsuarioBody, "unidades">>
 ): Promise<Usuario> {
   const response = await api.put<Usuario>(`/usuarios/${id}`, dados);
   return response.data;

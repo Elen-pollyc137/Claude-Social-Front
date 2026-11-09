@@ -28,7 +28,9 @@ import type { TipoAtendimento } from "@/src/types/agendamento.type";
 import type { MembroFamiliar } from "@/src/types/membro.type";
 import { Usuario } from "@/src/types/usuario.type";
 import PdfPreviewModal from "@/src/components/ui/PdfPreviewModal";
+import EnviarParecerModal from "./components/EnviarParecerModal";
 import styles from "../familias.module.scss";
+import { useUsuarioLogado } from "@/src/hooks/useUsuarioLogado";
 
 type FormData = {
   tecnicoId: string;
@@ -149,13 +151,15 @@ function vazioParaUndefined(valor: string) {
 
 // Id do documento imprimível vinculado ao atendimento, se houver.
 function documentoDe(a: Atendimento): PdfAberto | null {
-  if (a.parecer) return { documento: "parecer", id: a.parecer.id };
+  // Encaminhamento também gera um parecer; o documento principal é o próprio encaminhamento.
   if (a.encaminhamento) return { documento: "encaminhamento", id: a.encaminhamento.id };
+  if (a.parecer) return { documento: "parecer", id: a.parecer.id };
   if (a.beneficioEventual) return { documento: "beneficioEventual", id: a.beneficioEventual.id };
   return null;
 }
 
 export default function AtendimentosTab({ familiaId }: { familiaId: string }) {
+  const { podeEditar } = useUsuarioLogado();
   const [atendimentos, setAtendimentos] = useState<Atendimento[]>([]);
   const [tecnicos, setTecnicos] = useState<Usuario[]>([]);
   const [membros, setMembros] = useState<MembroFamiliar[]>([]);
@@ -169,6 +173,7 @@ export default function AtendimentosTab({ familiaId }: { familiaId: string }) {
   const [salvando, setSalvando] = useState(false);
   const [erro, setErro] = useState("");
   const [pdfAberto, setPdfAberto] = useState<PdfAberto | null>(null);
+  const [parecerParaEnviar, setParecerParaEnviar] = useState<{ id: string; titulo: string } | null>(null);
 
   const documento = documentoPorTipo[form.tipo];
 
@@ -331,12 +336,14 @@ export default function AtendimentosTab({ familiaId }: { familiaId: string }) {
     <div className={styles.card}>
       <div className={styles.membrosHeader}>
         <p className={styles.sectionTitle}>Atendimentos ({atendimentos.length})</p>
-        <button className={styles.btnNovo} onClick={abrirForm}>
-          {mostrarForm ? "Cancelar" : "+ Novo atendimento"}
-        </button>
+        {podeEditar && (
+          <button className={styles.btnNovo} onClick={abrirForm}>
+            {mostrarForm ? "Cancelar" : "+ Novo atendimento"}
+          </button>
+        )}
       </div>
 
-      {mostrarForm && (
+      {podeEditar && mostrarForm && (
         <form onSubmit={handleSalvar} className={styles.inlineForm}>
           {erro && <p className={styles.erro}>{erro}</p>}
           <div className={styles.formGrid}>
@@ -621,9 +628,24 @@ export default function AtendimentosTab({ familiaId }: { familiaId: string }) {
                         Ver PDF
                       </button>
                     )}
-                    <button className={styles.delete} onClick={() => handleExcluir(a.id)}>
-                      Excluir
-                    </button>
+                    {a.parecer && usuarioLogadoId && podeEditar && (
+                      <button
+                        className={styles.view}
+                        onClick={() =>
+                          setParecerParaEnviar({
+                            id: a.parecer!.id,
+                            titulo: a.titulo || tipoAtendimentoLabel[a.tipo],
+                          })
+                        }
+                      >
+                        Enviar para profissional
+                      </button>
+                    )}
+                    {podeEditar && (
+                      <button className={styles.delete} onClick={() => handleExcluir(a.id)}>
+                        Excluir
+                      </button>
+                    )}
                   </div>
                 </div>
                 <p className={styles.timelineMeta}>
@@ -638,6 +660,15 @@ export default function AtendimentosTab({ familiaId }: { familiaId: string }) {
         </div>
       ) : (
         <p className={styles.empty}>Nenhum atendimento registrado.</p>
+      )}
+
+      {parecerParaEnviar && (
+        <EnviarParecerModal
+          parecerId={parecerParaEnviar.id}
+          titulo={parecerParaEnviar.titulo}
+          usuarioLogadoId={usuarioLogadoId}
+          onClose={() => setParecerParaEnviar(null)}
+        />
       )}
 
       {pdfAberto && (

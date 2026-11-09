@@ -12,6 +12,7 @@ import { api } from "@/src/services/api";
 import { Agendamento, TipoAtendimento, StatusAgendamento } from "@/src/types/agendamento.type";
 import { Familia } from "@/src/types/familia.type";
 import styles from "./agendamentos.module.scss";
+import { useUsuarioLogado } from "@/src/hooks/useUsuarioLogado";
 
 type UsuarioSimples = { id: string; nome: string; perfil: string; status: string };
 
@@ -160,6 +161,7 @@ function saveNota(dateKey: string, value: string) {
 
 export default function AgendamentosPage() {
   const today = useMemo(() => new Date(), []);
+  const { podeEditar } = useUsuarioLogado();
 
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
@@ -330,12 +332,14 @@ export default function AgendamentosPage() {
           <h1 className={styles.heading}>Agendamentos</h1>
           <p className={styles.sub}>Gestão de atendimentos e visitas</p>
         </div>
-        <button
-          className={styles.btnNovo}
-          onClick={() => abrirNovo(selectedDay ?? undefined)}
-        >
-          + Novo agendamento
-        </button>
+        {podeEditar && (
+          <button
+            className={styles.btnNovo}
+            onClick={() => abrirNovo(selectedDay ?? undefined)}
+          >
+            + Novo agendamento
+          </button>
+        )}
       </div>
 
       <div className={`${styles.calendarLayout} ${selectedDay ? styles.withPanel : ""}`}>
@@ -411,12 +415,14 @@ export default function AgendamentosPage() {
                 </h2>
               </div>
               <div className={styles.dailyHeaderActions}>
-                <button
-                  className={styles.btnNovoSmall}
-                  onClick={() => abrirNovo(selectedDay)}
-                >
-                  + Novo
-                </button>
+                {podeEditar && (
+                  <button
+                    className={styles.btnNovoSmall}
+                    onClick={() => abrirNovo(selectedDay)}
+                  >
+                    + Novo
+                  </button>
+                )}
                 <button
                   className={styles.btnClose}
                   onClick={() => setSelectedDay(null)}
@@ -484,11 +490,13 @@ export default function AgendamentosPage() {
         <div className={styles.overlay} onClick={fecharModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
-              <h2>{editandoId ? "Editar agendamento" : "Novo agendamento"}</h2>
+              <h2>{!podeEditar ? "Agendamento" : editandoId ? "Editar agendamento" : "Novo agendamento"}</h2>
               <button className={styles.btnClose} onClick={fecharModal}>✕</button>
             </div>
 
             <form onSubmit={handleSubmit} className={styles.form}>
+              {/* Consulta: formulário somente leitura */}
+              <fieldset disabled={!podeEditar} style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}>
               <div className={styles.formGrid}>
                 <label className={styles.label}>
                   Família *
@@ -620,21 +628,25 @@ export default function AgendamentosPage() {
                 )}
               </div>
 
+              </fieldset>
+
               <div className={styles.modalFooter}>
                 <button
                   type="button"
                   className={styles.btnCancel}
                   onClick={fecharModal}
                 >
-                  Cancelar
+                  {podeEditar ? "Cancelar" : "Fechar"}
                 </button>
-                <button
-                  type="submit"
-                  className={styles.btnSalvar}
-                  disabled={salvando}
-                >
-                  {salvando ? "Salvando…" : editandoId ? "Atualizar" : "Cadastrar"}
-                </button>
+                {podeEditar && (
+                  <button
+                    type="submit"
+                    className={styles.btnSalvar}
+                    disabled={salvando}
+                  >
+                    {salvando ? "Salvando…" : editandoId ? "Atualizar" : "Cadastrar"}
+                  </button>
+                )}
               </div>
             </form>
           </div>

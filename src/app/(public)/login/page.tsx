@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { login } from "@/src/services/auth";
 import styles from "./login.module.scss";
 
@@ -30,6 +31,7 @@ export default function LoginPage() {
   return (
     <main className={styles.container}>
       <div className={styles.card}>
+        <Image src="/logo.png" alt="CRAS Digital" width={160} height={92} className={styles.logo} priority />
         <h1>Login</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>

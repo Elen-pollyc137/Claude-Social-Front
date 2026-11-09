@@ -36,7 +36,9 @@ export default function PdfPreviewModal({
           setErro(
             status === 403
               ? "Você não tem permissão para visualizar este documento."
-              : "Não foi possível gerar o PDF."
+              : status === undefined && error instanceof Error && error.message
+                ? error.message
+                : "Não foi possível gerar o PDF."
           );
         }
       });

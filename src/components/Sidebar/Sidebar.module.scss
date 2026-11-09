@@ -10,8 +10,11 @@
 }
 
 .logo {
-  padding: 24px 16px;
+  padding: 20px 16px;
   border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
   h2 {
     margin: 0 0 2px;
@@ -27,6 +30,12 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
+}
+
+.logoImg {
+  width: 56px;
+  height: auto;
+  flex-shrink: 0;
 }
 
 .nav {
@@ -92,4 +101,19 @@
   font-size: 0.72rem;
   color: var(--color-text-muted);
   text-align: center;
+}
+
+.contador {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-danger);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
 }

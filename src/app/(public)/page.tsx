@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./page.module.scss";
 
 const features = [
@@ -53,7 +54,7 @@ export default function HomePage() {
     <main className={styles.page}>
       <nav className={styles.nav}>
         <div className={styles.brand}>
-          <div className={styles.brandMark}>C</div>
+          <Image src="/logo.png" alt="" width={56} height={32} className={styles.brandLogo} priority />
           <div className={styles.brandText}>
             <strong>CRAS Digital</strong>
             <span>Gestão Socioassistencial</span>

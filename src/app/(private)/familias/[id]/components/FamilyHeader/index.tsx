@@ -7,6 +7,7 @@ import { obterPdfProntuario } from "@/src/services/familias";
 import Button from "@/src/components/ui/Button";
 import DropdownMenu from "@/src/components/ui/DropdownMenu";
 import PdfPreviewModal from "@/src/components/ui/PdfPreviewModal";
+import { useUsuarioLogado } from "@/src/hooks/useUsuarioLogado";
 import StatusBadge from "../StatusBadge";
 import DeleteFamilyModal from "../DeleteFamilyModal";
 import styles from "./styles.module.scss";
@@ -29,6 +30,7 @@ function exportarDados(familia: Familia) {
 }
 
 export default function FamilyHeader({ familia }: { familia: Familia }) {
+  const { podeEditar } = useUsuarioLogado();
   const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
   const [fichaAberta, setFichaAberta] = useState(false);
 
@@ -48,7 +50,7 @@ export default function FamilyHeader({ familia }: { familia: Familia }) {
       </div>
 
       <div className={styles.actions}>
-        <Button href={`/familias/${familia.id}/editar`}>Editar família</Button>
+        {podeEditar && <Button href={`/familias/${familia.id}/editar`}>Editar família</Button>}
 
         <DropdownMenu
           trigger={({ onClick }) => (
@@ -57,19 +59,25 @@ export default function FamilyHeader({ familia }: { familia: Familia }) {
             </button>
           )}
         >
-          <DropdownMenu.Item href={`/familias/${familia.id}/editar`}>
-            <Pencil size={15} /> Editar
-          </DropdownMenu.Item>
+          {podeEditar && (
+            <DropdownMenu.Item href={`/familias/${familia.id}/editar`}>
+              <Pencil size={15} /> Editar
+            </DropdownMenu.Item>
+          )}
           <DropdownMenu.Item onClick={() => setFichaAberta(true)}>
             <Printer size={15} /> Imprimir ficha
           </DropdownMenu.Item>
           <DropdownMenu.Item onClick={() => exportarDados(familia)}>
             <Download size={15} /> Exportar dados
           </DropdownMenu.Item>
-          <DropdownMenu.Divider />
-          <DropdownMenu.Item danger onClick={() => setModalExcluirAberto(true)}>
-            <Trash2 size={15} /> Excluir família
-          </DropdownMenu.Item>
+          {podeEditar && (
+            <>
+              <DropdownMenu.Divider />
+              <DropdownMenu.Item danger onClick={() => setModalExcluirAberto(true)}>
+                <Trash2 size={15} /> Excluir família
+              </DropdownMenu.Item>
+            </>
+          )}
         </DropdownMenu>
       </div>
 

@@ -1,0 +1,140 @@
+.page {
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.input {
+  padding: 9px 12px;
+  border: 1px solid #d4e4d4;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  outline: none;
+  background: #fff;
+  font-family: inherit;
+  color: inherit;
+  width: 100%;
+  min-width: 0;
+
+  &:focus {
+    border-color: var(--color-primary);
+  }
+}
+
+.dica {
+  margin: 14px 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.erro {
+  margin: 10px 0 0;
+  font-size: 0.8rem;
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.relatorio {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.relatorioTopo {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.icone {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: var(--color-text);
+}
+
+.descricao {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+
+.especificos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.acoes {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}

@@ -11,12 +11,14 @@ import {
 } from "@/src/services/documentos";
 import { Documento, TipoDocumento, formatarTamanhoArquivo } from "@/src/types/documento.type";
 import styles from "../familias.module.scss";
+import { useUsuarioLogado } from "@/src/hooks/useUsuarioLogado";
 
 function formatarData(data: string): string {
   return new Date(data).toLocaleDateString("pt-BR");
 }
 
 export default function DocumentosTab({ familiaId }: { familiaId: string }) {
+  const { podeEditar } = useUsuarioLogado();
   const [documentos, setDocumentos] = useState<Documento[]>([]);
   const [tipos, setTipos] = useState<TipoDocumento[]>([]);
   const [carregando, setCarregando] = useState(true);
@@ -120,6 +122,7 @@ export default function DocumentosTab({ familiaId }: { familiaId: string }) {
     <div className={styles.card}>
       <p className={styles.sectionTitle}>Documentos ({documentos.length})</p>
 
+      {podeEditar && (
       <form onSubmit={handleUpload} className={styles.uploadForm}>
         {erro && <p className={styles.erro}>{erro}</p>}
         <div className={styles.uploadRow}>
@@ -153,6 +156,7 @@ export default function DocumentosTab({ familiaId }: { familiaId: string }) {
           </button>
         </div>
       </form>
+      )}
 
       {carregando ? (
         <p className={styles.empty}>Carregando…</p>
@@ -192,9 +196,11 @@ export default function DocumentosTab({ familiaId }: { familiaId: string }) {
                   >
                     Baixar
                   </button>
-                  <button className={styles.delete} onClick={() => handleExcluir(d.id)}>
-                    Excluir
-                  </button>
+                  {podeEditar && (
+                    <button className={styles.delete} onClick={() => handleExcluir(d.id)}>
+                      Excluir
+                    </button>
+                  )}
                 </div>
               </div>
 

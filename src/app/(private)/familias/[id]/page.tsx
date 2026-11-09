@@ -13,6 +13,7 @@ import FamilyHeader from "./components/FamilyHeader";
 import FamilyTabs, { FamilyTab } from "./components/FamilyTabs";
 import FamilyDataCard from "./components/FamilyDataCard";
 import CadUnicoCard from "./components/CadUnicoCard";
+import UnidadesFamiliaCard from "./components/UnidadesFamiliaCard";
 import FamilyMembers from "./components/FamilyMembers";
 import AtendimentosTab from "./AtendimentosTab";
 import DocumentosTab from "./DocumentosTab";
@@ -79,6 +80,7 @@ export default function FamiliaDetalhePage({
           <FamilyDataCard familia={familia} />
 
           <div className={detailStyles.rightColumn}>
+            <UnidadesFamiliaCard familiaId={id} />
             <CadUnicoCard familia={familia} />
           </div>
         </div>

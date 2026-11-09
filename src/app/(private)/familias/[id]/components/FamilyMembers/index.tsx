@@ -9,6 +9,7 @@ import { calcularIdade } from "../format";
 import Card from "@/src/components/ui/Card";
 import EmptyState from "@/src/components/ui/EmptyState";
 import Button from "@/src/components/ui/Button";
+import { useUsuarioLogado } from "@/src/hooks/useUsuarioLogado";
 import styles from "./styles.module.scss";
 
 export default function FamilyMembers({
@@ -25,6 +26,7 @@ export default function FamilyMembers({
   onExcluir: (id: string) => void;
 }) {
   const router = useRouter();
+  const { podeEditar } = useUsuarioLogado();
   const visiveis = limit ? membros.slice(0, limit) : membros;
   const temMais = limit !== undefined && membros.length > limit;
 
@@ -32,9 +34,11 @@ export default function FamilyMembers({
     <Card
       title={`Membros da família (${membros.length})`}
       action={
-        <Link href={`/familias/${familiaId}/membros/novo`} className={styles.btnAdd}>
-          + Adicionar
-        </Link>
+        podeEditar ? (
+          <Link href={`/familias/${familiaId}/membros/novo`} className={styles.btnAdd}>
+            + Adicionar
+          </Link>
+        ) : undefined
       }
     >
       {membros.length === 0 ? (
@@ -42,7 +46,7 @@ export default function FamilyMembers({
           icon={<Users size={26} />}
           title="Nenhum membro cadastrado"
           description="Adicione as pessoas que fazem parte deste núcleo familiar."
-          action={<Button href={`/familias/${familiaId}/membros/novo`}>Adicionar membro</Button>}
+          action={podeEditar ? <Button href={`/familias/${familiaId}/membros/novo`}>Adicionar membro</Button> : undefined}
         />
       ) : (
         <div className={styles.list}>
@@ -50,7 +54,7 @@ export default function FamilyMembers({
             <div
               key={m.id}
               className={styles.row}
-              onClick={() => router.push(`/familias/${familiaId}/membros/${m.id}/editar`)}
+              onClick={podeEditar ? () => router.push(`/familias/${familiaId}/membros/${m.id}/editar`) : undefined}
             >
               <div className={styles.rowInfo}>
                 <span className={styles.rowName}>{m.nome}</span>
@@ -60,6 +64,7 @@ export default function FamilyMembers({
                 </span>
               </div>
               <div className={styles.rowRight}>
+                {podeEditar && (
                 <button
                   type="button"
                   className={styles.rowDelete}
@@ -71,7 +76,8 @@ export default function FamilyMembers({
                 >
                   <Trash2 size={15} />
                 </button>
-                <ChevronRight size={18} className={styles.chevron} />
+                )}
+                {podeEditar && <ChevronRight size={18} className={styles.chevron} />}
               </div>
             </div>
           ))}

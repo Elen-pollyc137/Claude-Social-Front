@@ -10,6 +10,7 @@ import Button from "@/src/components/ui/Button";
 import Badge from "@/src/components/ui/Badge";
 import EmptyState from "@/src/components/ui/EmptyState";
 import DropdownMenu from "@/src/components/ui/DropdownMenu";
+import { useUsuarioLogado } from "@/src/hooks/useUsuarioLogado";
 import styles from "./familias.module.scss";
 
 function iniciais(nome: string): string {
@@ -21,6 +22,7 @@ function iniciais(nome: string): string {
 
 export default function FamiliasPage() {
   const router = useRouter();
+  const { podeEditar } = useUsuarioLogado();
   const [familias, setFamilias] = useState<Familia[]>([]);
   const [busca, setBusca] = useState("");
   const [filtroStatus, setFiltroStatus] = useState<StatusFamilia | "">("");
@@ -55,7 +57,7 @@ export default function FamiliasPage() {
       <PageHeader
         title="Famílias"
         description="Gerencie famílias e seus respectivos membros"
-        action={<Button href="/familias/novo">+ Nova família</Button>}
+        action={podeEditar ? <Button href="/familias/novo">+ Nova família</Button> : undefined}
       />
 
       <div className={styles.filters}>
@@ -150,13 +152,17 @@ export default function FamiliasPage() {
                       <DropdownMenu.Item href={`/familias/${familia.id}`}>
                         <Eye size={15} /> Visualizar
                       </DropdownMenu.Item>
-                      <DropdownMenu.Item href={`/familias/${familia.id}/editar`}>
-                        <Pencil size={15} /> Editar
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Divider />
-                      <DropdownMenu.Item danger onClick={() => handleExcluir(familia.id)}>
-                        <Trash2 size={15} /> Excluir
-                      </DropdownMenu.Item>
+                      {podeEditar && (
+                        <>
+                          <DropdownMenu.Item href={`/familias/${familia.id}/editar`}>
+                            <Pencil size={15} /> Editar
+                          </DropdownMenu.Item>
+                          <DropdownMenu.Divider />
+                          <DropdownMenu.Item danger onClick={() => handleExcluir(familia.id)}>
+                            <Trash2 size={15} /> Excluir
+                          </DropdownMenu.Item>
+                        </>
+                      )}
                     </DropdownMenu>
                   </td>
                 </tr>

@@ -10,10 +10,12 @@ import Button from "@/src/components/ui/Button";
 import Badge from "@/src/components/ui/Badge";
 import EmptyState from "@/src/components/ui/EmptyState";
 import DropdownMenu from "@/src/components/ui/DropdownMenu";
+import { useUsuarioLogado } from "@/src/hooks/useUsuarioLogado";
 import styles from "./usuarios.module.scss";
 
 export default function UsuariosPage() {
   const router = useRouter();
+  const { podeGerenciarUsuarios } = useUsuarioLogado();
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [busca, setBusca] = useState("");
   const [carregando, setCarregando] = useState(true);
@@ -48,7 +50,7 @@ export default function UsuariosPage() {
       <PageHeader
         title="Usuários"
         description="Gerencie usuários e permissões de acesso"
-        action={<Button href="/usuarios/novo">+ Novo usuário</Button>}
+        action={podeGerenciarUsuarios ? <Button href="/usuarios/novo">+ Novo usuário</Button> : undefined}
       />
 
       <div className={styles.filters}>
@@ -79,6 +81,7 @@ export default function UsuariosPage() {
                 <th>Nome</th>
                 <th>E-mail</th>
                 <th>Perfil</th>
+                <th>Unidades</th>
                 <th>Status</th>
                 <th></th>
               </tr>
@@ -93,6 +96,19 @@ export default function UsuariosPage() {
                   <td>{usuario.nome}</td>
                   <td>{usuario.email}</td>
                   <td>{perfilUsuarioLabel[usuario.perfil] ?? usuario.perfil}</td>
+                  <td>
+                    {usuario.vinculosUnidade.length === 0 ? (
+                      <Badge tone="warning">Sem unidade</Badge>
+                    ) : (
+                      <span className={styles.lotacaoLista}>
+                        {usuario.vinculosUnidade.map((v) => (
+                          <span key={v.id}>
+                            {v.unidade.nome} — {v.funcao}
+                          </span>
+                        ))}
+                      </span>
+                    )}
+                  </td>
                   <td>
                     <Badge tone={statusUsuarioTone[usuario.status]} dot>
                       {statusUsuarioLabel[usuario.status] ?? usuario.status}
@@ -109,10 +125,14 @@ export default function UsuariosPage() {
                       <DropdownMenu.Item href={`/usuarios/${usuario.id}`}>
                         <Eye size={15} /> Visualizar
                       </DropdownMenu.Item>
-                      <DropdownMenu.Divider />
-                      <DropdownMenu.Item danger onClick={() => handleExcluir(usuario.id)}>
-                        <Trash2 size={15} /> Excluir
-                      </DropdownMenu.Item>
+                      {podeGerenciarUsuarios && (
+                        <>
+                          <DropdownMenu.Divider />
+                          <DropdownMenu.Item danger onClick={() => handleExcluir(usuario.id)}>
+                            <Trash2 size={15} /> Excluir
+                          </DropdownMenu.Item>
+                        </>
+                      )}
                     </DropdownMenu>
                   </td>
                 </tr>

@@ -15,8 +15,10 @@ import {
   statusUsuarioLabel,
   statusUsuarioTone,
 } from "@/src/types/usuario.type";
+import { mensagemErro } from "@/src/utils/formatacao";
 import Button from "@/src/components/ui/Button";
 import Badge from "@/src/components/ui/Badge";
+import { useUsuarioLogado } from "@/src/hooks/useUsuarioLogado";
 import styles from "../usuarios.module.scss";
 
 type MovimentacaoItem = {
@@ -85,6 +87,7 @@ export default function UsuarioDetalhePage({
 }) {
   const { id } = use(params);
   const router = useRouter();
+  const { podeGerenciarUsuarios } = useUsuarioLogado();
   const [usuario, setUsuario] = useState<UsuarioDetalhado | null>(null);
   const [carregando, setCarregando] = useState(true);
   const [processando, setProcessando] = useState(false);
@@ -109,6 +112,8 @@ export default function UsuarioDetalhePage({
       const novoStatus: StatusUsuario = usuario.status === "ATIVO" ? "INATIVO" : "ATIVO";
       const atualizado = await alterarStatusUsuario(id, novoStatus);
       setUsuario({ ...usuario, status: atualizado.status });
+    } catch (error) {
+      alert(mensagemErro(error, "Não foi possível alterar o status."));
     } finally {
       setProcessando(false);
     }
@@ -140,12 +145,16 @@ export default function UsuarioDetalhePage({
           <Badge tone={statusUsuarioTone[usuario.status]} dot>
             {statusUsuarioLabel[usuario.status]}
           </Badge>
-          <Button variant="secondary" onClick={handleAlternarStatus} disabled={processando}>
-            {usuario.status === "ATIVO" ? "Inativar" : "Ativar"}
-          </Button>
-          <Button variant="danger" onClick={handleExcluir}>
-            Excluir
-          </Button>
+          {podeGerenciarUsuarios && (
+            <>
+              <Button variant="secondary" onClick={handleAlternarStatus} disabled={processando}>
+                {usuario.status === "ATIVO" ? "Inativar" : "Ativar"}
+              </Button>
+              <Button variant="danger" onClick={handleExcluir}>
+                Excluir
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
@@ -160,6 +169,29 @@ export default function UsuarioDetalhePage({
             new Date(usuario.atualizadoEm).toLocaleDateString("pt-BR")
           )}
         </div>
+      </div>
+
+      <div className={styles.card}>
+        <p className={styles.sectionTitle}>Unidades de atuação ({usuario.vinculosUnidade.length})</p>
+        {usuario.vinculosUnidade.length === 0 ? (
+          <p className={styles.empty}>
+            Usuário sem unidade vinculada. <Link href="/vinculos">Vincular a uma unidade</Link>
+          </p>
+        ) : (
+          <div className={styles.infoGrid}>
+            {usuario.vinculosUnidade.map((v) => (
+              <div key={v.id} className={styles.infoItem}>
+                <span>
+                  {v.unidade.nome} ({v.unidade.tipo})
+                </span>
+                <span>{v.funcao}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        <p style={{ marginTop: "0.75rem", fontSize: "0.8rem" }}>
+          <Link href="/vinculos">Gerenciar vínculos</Link>
+        </p>
       </div>
 
       <div className={styles.card}>

@@ -18,6 +18,12 @@ export const statusUsuarioTone: Record<StatusUsuario, "success" | "neutral"> = {
   INATIVO: "neutral",
 };
 
+export type LotacaoUsuario = {
+  id: string;
+  funcao: string;
+  unidade: { id: string; nome: string; tipo: "CRAS" | "CREAS"; ativa?: boolean };
+};
+
 export type Usuario = {
   id: string;
   nome: string;
@@ -26,6 +32,7 @@ export type Usuario = {
   status: StatusUsuario;
   criadoEm: string;
   atualizadoEm: string;
+  vinculosUnidade: LotacaoUsuario[];
 };
 
 export type AtendimentoResumo = {
