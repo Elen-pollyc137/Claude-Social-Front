@@ -1,7 +1,9 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  // Em desenvolvimento o .env.local aponta para http://localhost:3333;
+  // sem a variável (ex.: deploy na Vercel), usa a API publicada.
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://claude-social-indol.vercel.app",
 });
 
 api.interceptors.request.use((config) => {
