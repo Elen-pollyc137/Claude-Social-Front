@@ -48,9 +48,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   return (
     <UsuarioLogadoProvider>
       <div className={styles.shell}>
-        <Sidebar />
-        <div className={styles.right}>
-          <Navbar />
+        <Navbar />
+        <div className={styles.body}>
+          <Sidebar />
           <main className={styles.content}>
             <div className={styles.contentInner}>
               <ConteudoProtegido>{children}</ConteudoProtegido>

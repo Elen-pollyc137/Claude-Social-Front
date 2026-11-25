@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -80,14 +79,6 @@ export default function Sidebar() {
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.logo}>
-        <Image src="/logo.png" alt="" width={56} height={32} className={styles.logoImg} priority />
-        <div>
-          <h2>CRAS</h2>
-          <span>Gestão Socioassistencial</span>
-        </div>
-      </div>
-
       <nav className={styles.nav}>
         {gruposVisiveis.map((group) => (
           <div key={group.label}>

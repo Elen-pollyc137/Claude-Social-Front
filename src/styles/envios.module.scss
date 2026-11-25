@@ -79,12 +79,12 @@
   td {
     padding: 0.75rem 1rem;
     text-align: left;
-    border-bottom: 1px solid #eef1ee;
+    border-bottom: 1px solid #eef1f6;
     vertical-align: middle;
   }
 
   th {
-    background: #f8faf8;
+    background: #f8fafc;
     font-weight: 600;
     color: var(--color-text-secondary);
     font-size: 0.8rem;
@@ -99,13 +99,13 @@
   cursor: pointer;
 
   &:hover td {
-    background: #f3f6f3;
+    background: #f3f6fa;
   }
 }
 
 .naoLido td {
   font-weight: 600;
-  background: #fbfdf9;
+  background: #fafcfe;
 }
 
 .sub {
@@ -140,7 +140,7 @@
   cursor: pointer;
 
   &:hover:not(:disabled) {
-    background: #f3f6f3;
+    background: #f3f6fa;
   }
 
   &:disabled {

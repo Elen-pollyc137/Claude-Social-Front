@@ -35,7 +35,7 @@
   flex-direction: column;
   gap: 10px;
   border-left: 4px solid;
-  box-shadow: 0 1px 4px rgba(41, 56, 39, 0.06);
+  box-shadow: 0 1px 4px rgba(20, 33, 61, 0.06);
 }
 
 .cardIcon {
@@ -65,22 +65,22 @@
 
 .cardPrimary {
   border-left-color: var(--color-primary);
-  .cardIcon { background: rgba(101, 197, 86, 0.12); color: var(--color-primary); }
+  .cardIcon { background: rgba(31, 74, 152, 0.12); color: var(--color-primary); }
 }
 
 .cardGreen {
   border-left-color: var(--color-accent);
-  .cardIcon { background: rgba(87, 239, 64, 0.1); color: #3daa2e; }
+  .cardIcon { background: rgba(25, 172, 195, 0.1); color: var(--color-secondary-hover); }
 }
 
 .cardMuted {
   border-left-color: var(--color-primary-dark);
-  .cardIcon { background: rgba(104, 158, 95, 0.12); color: var(--color-primary-dark); }
+  .cardIcon { background: rgba(31, 74, 152, 0.12); color: var(--color-primary-dark); }
 }
 
 .cardDark {
   border-left-color: var(--color-surface-dark);
-  .cardIcon { background: rgba(61, 70, 60, 0.1); color: var(--color-surface-dark); }
+  .cardIcon { background: rgba(22, 41, 79, 0.1); color: var(--color-surface-dark); }
 }
 
 .indicadores {
@@ -127,7 +127,7 @@ a.indicador:hover {
 .section {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(41, 56, 39, 0.06);
+  box-shadow: 0 1px 4px rgba(20, 33, 61, 0.06);
   overflow: hidden;
 }
 
@@ -147,7 +147,7 @@ a.indicador:hover {
   align-items: center;
   justify-content: space-between;
   padding: 18px 24px;
-  border-bottom: 1px solid #eef3ee;
+  border-bottom: 1px solid #eef2f8;
 }
 
 .sectionTitle {
@@ -160,7 +160,7 @@ a.indicador:hover {
 .dateTag {
   font-size: 0.75rem;
   color: var(--color-muted);
-  background: #f0f4f0;
+  background: #f0f4f9;
   padding: 4px 10px;
   border-radius: 999px;
 }
@@ -185,14 +185,14 @@ a.indicador:hover {
     color: var(--color-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    background: #f8faf8;
-    border-bottom: 1px solid #eef3ee;
+    background: #f8fafc;
+    border-bottom: 1px solid #eef2f8;
   }
 
   td {
     padding: 14px 20px;
-    color: #2d3b2d;
-    border-bottom: 1px solid #f2f6f2;
+    color: #1e2a44;
+    border-bottom: 1px solid #f2f5fa;
     vertical-align: middle;
   }
 
@@ -201,7 +201,7 @@ a.indicador:hover {
   }
 
   tbody tr:hover td {
-    background: #f8faf8;
+    background: #f8fafc;
   }
 }
 

@@ -31,7 +31,7 @@ export default function LoginPage() {
   return (
     <main className={styles.container}>
       <div className={styles.card}>
-        <Image src="/logo.png" alt="CRAS Digital" width={160} height={92} className={styles.logo} priority />
+        <Image src="/logo-cras.png" alt="CRAS Digital" width={120} height={90} className={styles.logo} priority />
         <h1>Login</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>

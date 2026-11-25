@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { getMe, logout, USUARIO_ATUALIZADO_EVENT } from "@/src/services/auth";
 import { Usuario } from "@/src/types/auth.type";
@@ -41,7 +43,10 @@ export default function Navbar() {
 
   return (
     <header className={styles.navbar}>
-      <div />
+      <Link href="/dashboard" className={styles.brand}>
+        <Image src="/logo-cras.png" alt="" width={44} height={33} className={styles.brandLogo} priority />
+        <span className={styles.brandText}>Gestão Socioassistencial</span>
+      </Link>
 
       <div className={styles.right}>
         {usuario && <NotificacoesAgenda tecnicoId={usuario.id} />}

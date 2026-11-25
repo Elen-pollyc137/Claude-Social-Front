@@ -19,7 +19,7 @@
 
   &:hover,
   &[aria-expanded="true"] {
-    background: #f3f6f3;
+    background: #f3f6fa;
     color: var(--color-text);
   }
 }
@@ -112,7 +112,7 @@
   color: inherit;
 
   &:hover {
-    background: #f3f6f3;
+    background: #f3f6fa;
   }
 }
 

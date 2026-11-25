@@ -34,7 +34,7 @@
   flex-direction: column;
   gap: 10px;
   border-left: 4px solid;
-  box-shadow: 0 1px 4px rgba(41, 56, 39, 0.06);
+  box-shadow: 0 1px 4px rgba(20, 33, 61, 0.06);
 }
 
 .cardLabel {
@@ -70,7 +70,7 @@
 .section {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(41, 56, 39, 0.06);
+  box-shadow: 0 1px 4px rgba(20, 33, 61, 0.06);
   overflow: hidden;
 }
 
@@ -79,7 +79,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 18px 24px;
-  border-bottom: 1px solid #eef3ee;
+  border-bottom: 1px solid #eef2f8;
 }
 
 .sectionTitle {
@@ -118,7 +118,7 @@
 .barTrack {
   height: 10px;
   border-radius: 999px;
-  background: #eef3ee;
+  background: #eef2f8;
   overflow: hidden;
 }
 
@@ -160,7 +160,7 @@
   height: 130px;
   display: flex;
   align-items: flex-end;
-  background: #f2f6f2;
+  background: #f2f5fa;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -200,11 +200,11 @@
 
 .ranking {
   padding: 12px 0;
-  border-right: 1px solid #eef3ee;
+  border-right: 1px solid #eef2f8;
 
   @media (max-width: 900px) {
     border-right: none;
-    border-bottom: 1px solid #eef3ee;
+    border-bottom: 1px solid #eef2f8;
   }
 }
 
@@ -247,7 +247,7 @@
 .rankingTrack {
   height: 6px;
   border-radius: 999px;
-  background: #eef3ee;
+  background: #eef2f8;
   overflow: hidden;
 }
 

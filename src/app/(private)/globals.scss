@@ -1,16 +1,23 @@
 :root {
-  --color-primary: #36a852;
-  --color-primary-hover: #2f9548;
-  --color-primary-soft: #eaf7ed;
+  /* Cores da logo CRAS Digital */
+  --color-primary: #1e4a96;        /* azul */
+  --color-primary-hover: #173b7a;
+  --color-primary-soft: #e8eef8;
 
-  --color-background: #f7f9f7;
+  --color-secondary: #19acc3;      /* turquesa */
+  --color-secondary-hover: #1491a5;
+  --color-secondary-soft: #e3f6f9;
+
+  --gradient-brand: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+
+  --color-background: #f5f8fc;
   --color-surface: #ffffff;
 
-  --color-text: #18231b;
-  --color-text-secondary: #66736a;
-  --color-text-muted: #98a29b;
+  --color-text: #14213d;
+  --color-text-secondary: #5b6780;
+  --color-text-muted: #94a0b4;
 
-  --color-border: #e7ece7;
+  --color-border: #e4e9f1;
 
   --color-danger: #dc4545;
   --color-danger-soft: #fff0f0;
@@ -26,9 +33,9 @@
 
   /* aliases legados — mantêm o restante do app funcionando sem edição arquivo a arquivo */
   --color-primary-dark: var(--color-primary-hover);
-  --color-accent: #57ef40;
+  --color-accent: var(--color-secondary);
   --color-muted: var(--color-text-secondary);
-  --color-surface-dark: #3d463c;
+  --color-surface-dark: #16294f;
   --color-base: var(--color-text);
 }
 
